@@ -1,33 +1,17 @@
-class Usuario:
-    def __init__(self, nomeDeUsuario, senha) -> None:
-        self.__nomeDeUsuario = nomeDeUsuario
-        self.__senha = senha
-        self.album = Album
-
-    def Usuario(self):
-        pass
-    
-    def getNomeDeUsuario(self):
-        pass
-
-    def cadastrar(self, nomeDeUruario, senha):
-        pass
-
-    def verificarLogin(self, nomeDeUsuario, senha):
-        pass
-
-    def getAlbum(self):
-        pass
-
-
 class Album: 
     def __init__(self) -> None:
         self.paginas = []
-        self.figurinhas =[]
+        self.figurinhas = [False,False,False,False,False,False,False,False,False,False]
         self.requisicoesTroca = []
 
-    def method(self, type):
-        pass
+    def colarFigurinha(self, nro):
+        self.figurinhas[nro] = True
+
+    def possuiFigurinha(self,nro):
+        if self.figurinhas[nro] == True:
+            return True
+        else:
+            return False
 
 class Pagina:
     def __init__(self, titulo, minNro, maxNro) -> None:
@@ -38,6 +22,58 @@ class Pagina:
 
     def method(self, type):
         pass
+
+
+class Usuario:
+    def __init__(self, nomeDeUsuario) -> None:
+        self.__nomeDeUsuario = nomeDeUsuario
+        self.__senha = None
+        self.album = Album()
+        self.colecao = [0,0,0,0,0,0,0,0,0,0]
+
+
+    def getNomeDeUsuario(self):
+        return self.__nomeDeUsuario
+
+    def cadastrar(self, nomeDeUruario, senha):
+        self.__nomeDeUsuario = nomeDeUruario
+        self.__senha = senha
+
+    def verificarLogin(self, nomeDeUsuario, senha):
+        if nomeDeUsuario == self.__nomeDeUsuario:
+            nome = True
+        else:
+            nome = False
+
+        if senha == self.__senha:
+            senha = True
+        else:
+            senha = False 
+        
+        if nome and senha:
+            print('Nome e senha corretos')
+        elif nome and not senha:
+            print('Senha incorreta')
+        else:
+            print('Nome de Usuário e/ou senha inorretos')
+
+    def getAlbum(self):
+        return self.album
+    
+    def adicionarFigurinhaColecao(self, nro):
+        self.colecao[nro] = self.colecao[nro] +1
+    
+    def colarFigurinhaAlbum(self, nro):
+        self.album.colarFigurinha(nro)
+
+    def possuiFigurinhaNoAlbum(self, nro):
+        return self.album.possuiFigurinha(nro)
+    
+    def possuiFigurinhaNaColecao(self, nro):
+        if self.colecao[nro] > 0:
+            return True
+        else:
+            return False
 
 
 
@@ -72,7 +108,7 @@ while menu != '3':
     menu = input('O que você deseja fazer?\n1 - Criar novo álbum\n2 - Acessar algum álbum\n3 - Sair do aplicativo')
 
     if menu == '1':
-        Usuario.cadastrar
+        pass
 
     elif menu == '2':
         pass
