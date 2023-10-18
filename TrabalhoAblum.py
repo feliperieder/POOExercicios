@@ -25,19 +25,15 @@ class Pagina:
 
 
 class Usuario:
-    def __init__(self, nomeDeUsuario) -> None:
+    def __init__(self, nomeDeUsuario, senha) -> None:
         self.__nomeDeUsuario = nomeDeUsuario
-        self.__senha = None
+        self.__senha = senha
         self.album = Album()
         self.colecao = [0,0,0,0,0,0,0,0,0,0]
 
 
     def getNomeDeUsuario(self):
         return self.__nomeDeUsuario
-
-    def cadastrar(self, nomeDeUruario, senha):
-        self.__nomeDeUsuario = nomeDeUruario
-        self.__senha = senha
 
     def verificarLogin(self, nomeDeUsuario, senha):
         if nomeDeUsuario == self.__nomeDeUsuario:
@@ -51,11 +47,9 @@ class Usuario:
             senha = False 
         
         if nome and senha:
-            print('Nome e senha corretos')
-        elif nome and not senha:
-            print('Senha incorreta')
+            return True
         else:
-            print('Nome de Usuário e/ou senha inorretos')
+            return False
 
     def getAlbum(self):
         return self.album
@@ -102,19 +96,61 @@ class Troca:
         pass
 
 
+usuarios = []
+
+def menuAlbum(conta):
+    menu = ''    
+    while menu != '4':
+        menu = input('O que você deseja fazer?\n1 - Colar Figurinha\n2 - Disponibilizar para a troca\n3 - Propor Troca de Figurinhas\n4 - Revisar solicitações de troca\n5 - Voltar ao Menu anterior')
+
+        if menu == '1':
+            pass
+
+        elif menu == '2':
+            pass
+
+        elif menu == '3':
+            pass
+
+        elif menu == '4':
+            pass
+
+        elif menu == '5':
+            print('Voltando para o menu anterior.')
+            print('Voltando para o menu anterior..')
+            print('Voltando para o menu anterior...')
+
+        else:
+            print('Opção inválida, tente novamente')
+
     
 menu = ''    
 while menu != '3':
-    menu = input('O que você deseja fazer?\n1 - Criar novo álbum\n2 - Acessar algum álbum\n3 - Sair do aplicativo')
+    menu = input('O que você deseja fazer?\n1 - Criar novo álbum\n2 - Acessar algum álbum\n3 - Sair do aplicativo\n')
 
     if menu == '1':
-        pass
+        nome = input('Defina o nome do Usuário: ')
+        senha = input('Defina a senha: ')
+        usuarios.append(Usuario(nome, senha))
 
     elif menu == '2':
-        pass
+        nome = input('Informe o nome do Usuário: ')
+        senha = input('Informe a senha: ')
+        existe = False
+        for i in range(len(usuarios)):
+            if usuarios[i].verificarLogin(nome, senha):
+                existe = True
+                conta = usuarios[i]
+        
+        if existe:
+            menuAlbum(conta)
+
+        else:
+            print('Nome de usuário e/ou senha incorretos')
+            
 
     elif menu == '3':
-        pass
+        print('Encerrando atividades no aplicativo')
 
     else:
         print('Opção inválida, tente novamente')
