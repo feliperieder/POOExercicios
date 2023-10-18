@@ -1,7 +1,7 @@
 class Album: 
     def __init__(self) -> None:
-        self.paginas = []
-        self.figurinhas = [False,False,False,False,False,False,False,False,False,False]
+        self.paginas = [Pagina("Capa", 0, 0), Pagina('A - B', 1, 5), Pagina('C - F', 6, 10), Pagina('F - I', 11, 15), Pagina('P - V', 16, 20)]
+        self.figurinhas = [False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False]
         self.requisicoesTroca = []
 
     def colarFigurinha(self, nro):
@@ -20,8 +20,15 @@ class Pagina:
         self.__minNro = minNro
         self.__maxNro = maxNro
 
-    def method(self, type):
-        pass
+    def show(self):
+        print(self.__titulo)
+
+        if self.__maxNro > 0:
+            pass
+
+        else:
+            print('Times do Brasileirão')
+
 
 
 class Usuario:
@@ -29,7 +36,7 @@ class Usuario:
         self.__nomeDeUsuario = nomeDeUsuario
         self.__senha = senha
         self.album = Album()
-        self.colecao = [0,0,0,0,0,0,0,0,0,0]
+        self.colecao = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 
     def getNomeDeUsuario(self):
@@ -89,22 +96,42 @@ class Troca:
         self.__figurinhaDisponivel = figurinhaDisponivel
         self.__status = status
 
-    def Troca(self, nomeProponente, digurinhaRequerida, figurinhaDisponivel):
-        pass
-
     def aceitar(self, aceito):
         pass
 
 
 usuarios = []
 
+def verAlbum(conta):
+    pagina = 0
+    conta.album.paginas[pagina].show()
+    menu = ''
+    while menu != 3:
+        menu = input('O que você deseja fazer?\n1 - Página Anterior\n2 - Próxima Página\n3 - Fechar álbum\n')
+        if menu == '1':
+            if pagina < 4:
+                pagina += 1
+                conta.album.paginas[pagina].show()
+            else:
+                print("Essa é a última página do álbum, tente outra operação")
+        elif menu == '2':
+            if pagina > 0:
+                pagina -= 1
+                conta.album.paginas[pagina].show()
+            else:
+                print("Essa é a primeira página do álbum, tente outra operação")
+
+
+        
+
+
 def menuAlbum(conta):
     menu = ''    
     while menu != '4':
-        menu = input('O que você deseja fazer?\n1 - Colar Figurinha\n2 - Disponibilizar para a troca\n3 - Propor Troca de Figurinhas\n4 - Revisar solicitações de troca\n5 - Voltar ao Menu anterior')
+        menu = input('O que você deseja fazer?\n1 - Ver Álbum\n2 - Gerenciar a Coleção\n3 - Abrir Pacote de Figurinhas\n4 - Voltar ao Menu anterior\n')
 
         if menu == '1':
-            pass
+            verAlbum(conta)
 
         elif menu == '2':
             pass
@@ -113,9 +140,6 @@ def menuAlbum(conta):
             pass
 
         elif menu == '4':
-            pass
-
-        elif menu == '5':
             print('Voltando para o menu anterior.')
             print('Voltando para o menu anterior..')
             print('Voltando para o menu anterior...')
