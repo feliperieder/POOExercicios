@@ -1,3 +1,5 @@
+
+
 class Album: 
     def __init__(self) -> None:
         self.paginas = [Pagina("Capa", 0, 0), Pagina('A - B', 1, 5), Pagina('C - F', 6, 10), Pagina('F - I', 11, 15), Pagina('P - V', 16, 20)]
@@ -79,15 +81,24 @@ class Usuario:
 
 
 class Figurinha:
-    def __init__(self, numero, nome, conteudo, status, nroPagina) -> None:
+    def __init__(self, numero, nome, conteudo, nroPagina) -> None:
         self.__numero = numero
         self.__nome = nome
         self.__conteudo = conteudo
-        self.__status = status
+        self.__status = 0
         self.__nroPagina = nroPagina
 
-    def method(self, type):
+    def statusDAFigurinha(self,novaFIgurinha):
         pass
+
+    def informarStatusdaFigurinha(self):
+        if status == 0:
+            print('Figurinha na coleção')
+        elif status == 1:
+            print('Figurinha colada no álbum')
+        else:
+            print('Disponível para troca')
+
 
 class Troca:
     def __init__(self, nomeProponente, figurinhaRequerida, figurinhaDisponivel, status) -> None:
@@ -122,6 +133,33 @@ def verAlbum(conta):
                 print("Essa é a primeira página do álbum, tente outra operação")
 
 
+
+def menuGerenciarColecao(conta):
+    menu = ''    
+    while menu != '4':
+        menu = input('O que você deseja fazer?\n1 -Colar Figurinha\n2 - Disponibilizar para a troca\n3 - Propor troca de Figurinhas\n4 - Revisar solicitações de troca\n5 - Voltar ao Menu anterior\n')
+
+        if menu == '1':
+            pass
+
+        elif menu == '2':
+            pass
+
+        elif menu == '3':
+            pass
+
+        elif menu == '4':
+            pass
+
+        elif menu == '5':
+            print('Voltando para o menu anterior.')
+            print('Voltando para o menu anterior..')
+            print('Voltando para o menu anterior...')
+
+        else:
+            print('Opção inválida, tente novamente')
+
+
         
 
 
@@ -134,7 +172,10 @@ def menuAlbum(conta):
             verAlbum(conta)
 
         elif menu == '2':
-            pass
+            #mostrar todas as figurinhas que o usuário tem e não colou ainda
+            #depois
+            menuGerenciarColecao(conta)
+
 
         elif menu == '3':
             pass
