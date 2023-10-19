@@ -73,7 +73,7 @@ class Usuario:
         self.__nomeDeUsuario = nomeDeUsuario
         self.__senha = senha
         self.album = Album()
-        self.colecao = [0,2,0,0,3,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0]
+        self.colecao = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
         self.novasFiguras()
 
