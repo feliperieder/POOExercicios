@@ -20,15 +20,18 @@ class Album:
             pagina.figurinhasPaginha(self.figurinhas)
   
     def colarFigurinha(self, nro):
-        self.figurinhas[nro] = True
+        self.figurinhasColadas[nro] = True
+        if self.figurinhasColecao[nro] and self.figurinhas[nro].informarStatusdaFigurinha() == 1:
+                self.figurinhas[nro].statusDaFigurinha(2)
+
+    def figurinhaColada(self, nro):
+        return self.figurinhasColadas[nro]
 
     def figuraNovaColecao(self, nro):
         self.figurinhasColecao[nro] = True
         for n in range(len(self.figurinhasColecao)):
-            if self.figurinhasColecao[n] and self.figurinhas[n].informarStatusdaFigurinha == 0:
-                self.figurinhas[n].statusdaFigurinha = 1
-
-
+            if self.figurinhasColecao[n] and self.figurinhas[n].informarStatusdaFigurinha() == 0:
+                self.figurinhas[n].statusDaFigurinha(1)
 
 class Pagina:
     def __init__(self, titulo, minNro, maxNro) -> None:
@@ -56,7 +59,7 @@ class Pagina:
                 elif int(self.figurinhas[contador].informarStatusdaFigurinha()) == 1:
                     print(figura, '- COLAR')
                 else:
-                    nome, conteudo = self.figurinhas[contador-1].conteudo()
+                    nome, conteudo = self.figurinhas[contador].conteudo()
                     print(figura, '-', nome, '-', conteudo)
                 figura += 1
                 contador +=1
@@ -102,7 +105,13 @@ class Usuario:
         self.novasFiguras()
     
     def colarFigurinhaAlbum(self, nro):
-        self.album.colarFigurinha(nro)
+        if not self.album.figurinhaColada(nro) and self.possuiFigurinhaNaColecao(nro):
+            self.album.colarFigurinha(nro)
+            self.colecao[nro] -=1
+        elif not self.possuiFigurinhaNaColecao(nro):
+            print('Você não tem essa figurinha para colar')
+        else:
+            print('Essa figurinha já foi colada')
 
     def possuiFigurinhaNoAlbum(self, nro):
         return self.album.possuiFigurinha(nro)
@@ -123,8 +132,6 @@ class Usuario:
             if self.possuiFigurinhaNaColecao(nro):
                 self.album.figuraNovaColecao(nro)
 
-
-
 class Figurinha:
     def __init__(self, numero, nome, conteudo, nroPagina) -> None:
         self.__numero = numero
@@ -139,7 +146,7 @@ class Figurinha:
     def informarStatusdaFigurinha(self):
         return self.__status
     
-    def contudo(self):
+    def conteudo(self):
         return self.__nome, self.__conteudo
     def pagina(self):
         return self.__nroPagina
@@ -178,10 +185,12 @@ def verAlbum(conta):
 def menuGerenciarColecao(conta):
     menu = ''    
     while menu != '5':
-        menu = input('O que você deseja fazer?\n1 -Colar Figurinha\n2 - Disponibilizar para a troca\n3 - Propor troca de Figurinhas\n4 - Revisar solicitações de troca\n5 - Voltar ao Menu anterior\n')
+        menu = input('O que você deseja fazer?\n1 - Colar Figurinha\n2 - Disponibilizar para a troca\n3 - Propor troca de Figurinhas\n4 - Revisar solicitações de troca\n5 - Voltar ao Menu anterior\n')
 
         if menu == '1':
-            pass
+            print('Você optou por colar a figurinha')
+            colar = int(input('Qual figuriha você deseja colar? '))-1
+            conta.colarFigurinhaAlbum(colar)
 
         elif menu == '2':
             pass
