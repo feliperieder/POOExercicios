@@ -5,18 +5,30 @@ import random
 
 class Album: 
     def __init__(self) -> None:
-        self.paginas = [Pagina("Capa", 0, 0), Pagina('A - B', 1, 5), Pagina('C - F', 6, 10), Pagina('F - I', 11, 15), Pagina('P - V', 16, 20)]
-        self.figurinhas = [False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False]
+        self.paginas = [Pagina(0, 0, 0), Pagina(1, 1, 5), Pagina(2, 6, 10), Pagina(3, 11, 15), Pagina(4, 16, 20)]
+        self.figurinhasColecao = [False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False]
+        self.figurinhasColadas = [False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False]
         self.requisicoesTroca = []
+        self.figurinhas = []
 
+        with open('.\Figurinhascsv.csv', mode = 'r', encoding='utf-8', newline='') as arquivo:
+            leitor_csv = csv.reader(arquivo, delimiter=';')
+            for linha in leitor_csv:
+                self.figurinhas.append(Figurinha(linha[0], linha[1], linha[2], linha[3]))
+
+        for pagina in self.paginas:
+            pagina.figurinhasPaginha(self.figurinhas)
+  
     def colarFigurinha(self, nro):
         self.figurinhas[nro] = True
 
-    def possuiFigurinha(self,nro):
-        if self.figurinhas[nro] == True:
-            return True
-        else:
-            return False
+    def figuraNovaColecao(self, nro):
+        self.figurinhasColecao[nro] = True
+        for n in range(len(self.figurinhasColecao)):
+            if self.figurinhasColecao[n] and self.figurinhas[n].informarStatusdaFigurinha == 0:
+                self.figurinhas[n].statusdaFigurinha = 1
+
+
 
 class Pagina:
     def __init__(self, titulo, minNro, maxNro) -> None:
@@ -26,11 +38,11 @@ class Pagina:
         self.__maxNro = maxNro
         self.figurinhas = []
 
-        with open('.\Figurinhascsv.csv', mode = 'r', encoding='utf-8', newline='') as arquivo:
-            leitor_csv = csv.reader(arquivo, delimiter=';')
-            for linha in leitor_csv:
-                if int(linha[0]) >= self.__minNro and int(linha[0]) <= self.__maxNro:
-                    self.figurinhas.append(Figurinha(linha[0], linha[1], linha[2], linha[3]))
+    def figurinhasPaginha(self, figurinhas):
+        for figurinha in figurinhas:
+            if int(figurinha.pagina()) == self.__titulo and int(figurinha.pagina()) <= self.__maxNro:
+                self.figurinhas.append(figurinha)
+
 
     def show(self):
         print(self.__titulo)
@@ -60,6 +72,8 @@ class Usuario:
         self.album = Album()
         self.colecao = [0,2,0,0,3,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0]
 
+        self.novasFiguras()
+
 
     def getNomeDeUsuario(self):
         return self.__nomeDeUsuario
@@ -85,6 +99,7 @@ class Usuario:
     
     def adicionarFigurinhaColecao(self, nro):
         self.colecao[nro] = self.colecao[nro] +1
+        self.novasFiguras()
     
     def colarFigurinhaAlbum(self, nro):
         self.album.colarFigurinha(nro)
@@ -103,6 +118,12 @@ class Usuario:
             if self.possuiFigurinhaNaColecao(nro):
                 print('Você possui', self.colecao[nro], 'figurinhas', nro+1)
 
+    def novasFiguras(self):
+        for nro in range(len(self.colecao)):
+            if self.possuiFigurinhaNaColecao(nro):
+                self.album.figuraNovaColecao(nro)
+
+
 
 class Figurinha:
     def __init__(self, numero, nome, conteudo, nroPagina) -> None:
@@ -120,6 +141,8 @@ class Figurinha:
     
     def contudo(self):
         return self.__nome, self.__conteudo
+    def pagina(self):
+        return self.__nroPagina
 
 class Troca:
     def __init__(self, nomeProponente, figurinhaRequerida, figurinhaDisponivel, status) -> None:
