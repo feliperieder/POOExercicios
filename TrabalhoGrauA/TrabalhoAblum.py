@@ -1,7 +1,5 @@
-
 import csv
 import random
-
 
 class Album: 
     def __init__(self) -> None:
@@ -18,6 +16,12 @@ class Album:
 
         for pagina in self.paginas:
             pagina.figurinhasPaginha(self.figurinhas)
+
+    def statusDasFigurinhas(self):
+        status = []
+        for figurinha in self.figurinhas:
+            status.append(figurinha.informarStatusdaFigurinha())
+        return status
   
     def colarFigurinha(self, nro):
         self.figurinhasColadas[nro] = True
@@ -32,6 +36,11 @@ class Album:
         for n in range(len(self.figurinhasColecao)):
             if self.figurinhasColecao[n] and self.figurinhas[n].informarStatusdaFigurinha() == 0:
                 self.figurinhas[n].statusDaFigurinha(1)
+
+    def disponibilizarTroca(self, nro):
+        if self.figurinhasColecao[nro]:
+                self.figurinhas[nro].statusDaFigurinha(3)
+                print(self.figurinhas[nro].informarStatusdaFigurinha())
 
 class Pagina:
     def __init__(self, titulo, minNro, maxNro) -> None:
@@ -77,6 +86,11 @@ class Usuario:
 
         self.novasFiguras()
 
+    def statusDasFigurinhas(self):
+        return self.album.statusDasFigurinhas()
+
+    def disponibilizarFigurinhaTroca(self, nro):
+        self.album.disponibilizarTroca(nro)
 
     def getNomeDeUsuario(self):
         return self.__nomeDeUsuario
@@ -152,16 +166,29 @@ class Figurinha:
         return self.__nroPagina
 
 class Troca:
-    def __init__(self, nomeProponente, figurinhaRequerida, figurinhaDisponivel, status) -> None:
+    def __init__(self, nomeProponente, nomeRequerido, figurinhaRequerida, figurinhaDisponivel) -> None:
         self.__nomeProponente = nomeProponente
+        self.__nomeRequerio = nomeRequerido
         self.__figurinhaRequerida = figurinhaRequerida
         self.__figurinhaDisponivel = figurinhaDisponivel
-        self.__status = status
+        self.__status = False
 
     def aceitar(self, aceito):
         pass
 
+    def informarNomeRequerio(self):
+        return self.__nomeRequerio
+    
+    def informarNomeProponente(self):
+        return self.__nomeProponente
+    def figurinhaRequerida(self):
+        return self.__figurinhaRequerida()
+    def figurinhaDisponivel(self):
+        return self.__figurinhaDisponivel
+    
+
 usuarios = []
+trocas = []
 
 def verAlbum(conta):
     pagina = 0
@@ -193,13 +220,50 @@ def menuGerenciarColecao(conta):
             conta.colarFigurinhaAlbum(colar)
 
         elif menu == '2':
-            pass
+            print('Disponibiizar figurinha para troca')
+            nro = int(input('Qual figurinha você deseja disponibilizar para troca? ')) -1
+            conta.disponibilizarFigurinhaTroca(nro)
 
         elif menu == '3':
-            pass
+            print('3 - Propor troca de Figurinhas')
+            print('Lista de usuários')
+            nro =1
+            for usuario in usuarios:
+                print(nro, '-', usuario.getNomeDeUsuario())
+                for status in range(len(usuario.statusDasFigurinhas())):
+                    if usuario.statusDasFigurinhas()[status] == 3:
+                        print('Figurinha', status+1, 'disponível para troca')
+
+                nro +=1
+            usuarioTroca = int(input('Diga o número do usuário comquem deseja realizar a troca:\n'))
+            trocaDesejada = int(input('Informe o número da figurinha que você deseja trocar'))
+            figurinhaIndesejada = int(input('Qual figurinha você deseja trocar?\n'))
+            if conta.possuiFigurinhaNaColecao(figurinhaIndesejada):
+                trocas.append(Troca(conta.getNomeDeUsuario, usuarios[usuarioTroca].getNomeDeUsuario, trocaDesejada))
+            else:
+                print('você não tem essa figurinha na coleção')
+            
 
         elif menu == '4':
-            pass
+            print('Revisar solicitações de troca')
+            for troca in trocas:
+                if troca.informarNomeRequerido() == conta.getNomeDeUsuario():
+                    print(troca.informarNomeProponente(), 'deseja trocar a carta número', troca.figurinhaRequerida(),'pela carta', troca.figurinhaDisponivel(),'.')
+                    aceitar = input('Aceita realizar a troca? (s/n)\n')
+                    teste = False
+                    while not False:
+                        if aceitar == 'n':
+                            print('Você recusou a troca')
+                            teste = True
+                        elif aceitar == 's':
+                            print('Troca feita')
+                            teste = True
+                        else:
+                            print('Opção inválida, tente novamente')
+                
+                else:
+                    print('Ninguém deseja trocar com você')
+
 
         elif menu == '5':
             print('Voltando para o menu anterior.')
@@ -225,7 +289,7 @@ def menuAlbum(conta):
 
         elif menu == '3':
             print('Abrindo pacote de Figurinhas')
-            novafigurinha = [random.randint(1,20),random.randint(0,19),random.randint(1,20)]
+            novafigurinha = [random.randint(0,19),random.randint(0,19),random.randint(0,19)]
             print('Voce ganhou 3 novas figurinhas', novafigurinha[0]+1,',', novafigurinha[1]+1,'e', novafigurinha[2]+1)
             for nova in novafigurinha:
                 conta.adicionarFigurinhaColecao(nova)
