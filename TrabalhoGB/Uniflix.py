@@ -89,6 +89,7 @@ class Perfil:
     def adicionarFavorito(self, media):
         if len(self.__lista_favoritos) < 10:
             self.__lista_favoritos.append(media)
+            print('Mídia favoritada')
         else:
             print('Sua lista de favoritos já está cheia. Por favor, remova um item da sua lista para adicionar outro')
 
@@ -141,10 +142,8 @@ class Perfil:
 
         if not favorito:
             self.adicionarFavorito(media)
-            print('Mídia favoritada')
         else:
             self.removerFavorito(media)
-            print('Mídia desfavoritada')
 
     def buscarTitulo(self, procurar_titulo, catalogo):
         encontrou = False
@@ -288,6 +287,7 @@ class Programa_TV(Media):
         contador = 1
         for episódio in self.__lista_ep:
             print(contador, '-', episódio)
+            contador +=1
         return self.__lista_ep
 
     def adicionarEpisodio(self, temporada, titulo):
@@ -434,7 +434,7 @@ def menuEpisodios(perfil, media):
         temporada = media.listarEpisodios()
         while menu_ep != 0:
             menu_ep = int(input('Qual episódio você deseja assistir (0 para voltar)\n'))
-            if menu_ep <= len(temporada):
+            if menu_ep <= len(temporada) and menu_ep -1 >= 0:
                 if temporada[menu_ep-1]:
                     perfil.assistirMedia(media)
                 else:
@@ -447,9 +447,9 @@ def menuEpisodios(perfil, media):
     else:
         menu_ep = ''
         eps = media.listarEpisodios()
-        while menu_ep != '0':
+        while menu_ep != 0:
             menu_ep = int(input('Qual episódio você deseja assistir (0 para voltar)\n'))
-            if menu_ep <= len(eps):
+            if menu_ep <= len(eps) and menu_ep -1 >= 0:
                 if eps[menu_ep-1]:
                     perfil.assistirMedia(media)
                 else:
@@ -498,8 +498,9 @@ def menuListarMedia(perfil, medias):
             print(contador, '-', media._titulo)
             contador +=1
     acessar = int(input("Digite o número da mídia que você deseja acessar. Digite qualquer outro número para voltar\n"))
-    if acessar < len(medias):
+    if acessar <= len(medias) and acessar -1 >= 0:
         if medias[acessar-1]:
+            print(acessar - 1)
             menuMedia(perfil, medias[acessar -1])
         else:
             print('Opção inválida')
