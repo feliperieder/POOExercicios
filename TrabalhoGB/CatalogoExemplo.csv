@@ -1,0 +1,26 @@
+ID;Tipo;Título;Gênero;Ano;Classificação;Temporadas;Diretor;Produtor;Tema;Estúdio
+0;Série;Stranger Things;Suspense;2016;16;4;The Duffer Brothers;-;-;-
+1;Série;Friends;Comédia;1994;12;10;-;-;-;-
+2;Série;Breaking Bad;Drama;2008;18;5;Vince Gilligan;-;-;-
+3;Série;Game of Thrones;Fantasia;2011;18;8;-;-;-;-
+4;Série;The Crown;Drama;2016;16;5;-;-;-;-
+5;Filme;Pulp Fiction;Crime;1994;18;-;Quentin Tarantino;Lawrence Bender;-;-
+6;Filme;Inception;Ficção Científica;2010;14;-;Christopher Nolan;Emma Thomas;-;-
+7;Filme;The Shawshank Redemption;Drama;1994;16;-;Frank Darabont;Niki Marvin;-;-
+8;Filme;The Godfather;Drama;1972;18;-;Francis Ford Coppola;Albert S. Ruddy;-;-
+9;Filme;The Dark Knight;Ação;2008;16;-;Christopher Nolan;Christopher Nolan;-;-
+10;Documentário;Planet Earth II;Natureza;2016;L;-;-;-;Natureza;-
+11;Documentário;Blackfish;Documentário;2013;L;-;-;Gabriela Cowperthwaite;-;-
+12;Documentário;The Cove;Documentário;2009;L;-;-;-;Meio Ambiente;-
+13;Documentário;Super Size Me;Documentário;2004;14;-;-;Morgan Spurlock;-;-
+14;Documentário;March of the Penguins;Documentário;2005;L;-;-;-;Natureza;-
+15;Animação;Toy Story;Animação;1995;L;-;-;-;-;Pixar Animation Studios
+16;Animação;Zootopia;Animação;2016;L;-;-;-;-;Walt Disney Animation Studios
+17;Animação;Finding Nemo;Animação;2003;L;-;-;-;-;Pixar Animation Studios
+18;Animação;The Lion King;Animação;1994;L;-;-;-;-;Walt Disney Animation Studios
+19;Animação;Spirited Away;Animação;2001;L;-;-;-;-;Studio Ghibli
+20;Reality Show;Big Brother;Reality Show;2000;14;25;-;-;-;-
+21;Reality Show;MasterChef;Culinária;2010;L;12;-;-;-;-
+22;Programa de Auditório;The Ellen DeGeneres Show;Entretenimento;2003;L;19;-;-;-;-
+23;Programa de Auditório;The Tonight Show Starring Jimmy Fallon;Entretenimento;2014;L;9;-;-;-;-
+24;Programa de Auditório;The Voice;Reality Show;2011;L;20;-;-;-;-
