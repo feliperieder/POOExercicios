@@ -111,7 +111,7 @@ class Perfil:
             if self.__ultimos_assistidos[nro] == media:
                 assistido = nro
         if assistido != None:
-            del self.__ultimos_assistidos[nro]
+            del self.__ultimos_assistidos[assistido]
 
         
         if len(self.__ultimos_assistidos) < 10:
@@ -217,6 +217,7 @@ class Serie(Media):
         print(self._titulo, 'é uma série de', self.__n_temporadas, 'temporadas.')
         return super().exibirInfo()
     
+    #Pergunta a temporada, mostra a lista de episódios da temporada e retorna ela
     def listarEpisodios(self):
         temporada = int(input('Selecione a temporada que você deseja assistir (ex. 1, 2).\nNúmero de temporadas {}:\n'.format(self.__n_temporadas)))
         if temporada <= len(self.__ep_por_temporada):
@@ -282,6 +283,7 @@ class Programa_TV(Media):
         print(self._titulo, 'é um programa de TV com', self.__nro_eps, 'episódios.')
         return super().exibirInfo()
     
+    #Mostra os episódios e retorna a lista
     def listarEpisodios(self):
         print('Episódios de {}:'.format(self._titulo))
         contador = 1
@@ -355,6 +357,7 @@ class Catalogo:
         else:
             return None
 
+#Definindo listas para adicionar no catálogo
 lista_serie = []
 lista_filme = []
 lista_documentario = []
@@ -375,6 +378,7 @@ with open('.\CatalogoExemplo.csv', mode = 'r', encoding='utf-8', newline='') as 
         elif linha[1] == 'Reality Show' or linha[1] == 'Programa de Auditório':
             lista_programaTV.append(Programa_TV(linha[0], linha[1], linha[2], linha[3], linha[4], linha[5]))
 
+#Adicionando novas mídias no catálogo
 catalogo = Catalogo(lista_serie, lista_filme, lista_documentario, lista_animacao, lista_programaTV)
 catalogo.adicionarMedia(Serie(25, 'Série', 'Dark', 'Drama', 2017, 16, 4), 'Série')
 catalogo.adicionarMedia(Programa_TV(27, 'Programa de Auditório', 'Receitas da Vovó', 'Culinária', 2010, 'L'), 'Programa de Auditório')
